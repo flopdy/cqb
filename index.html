@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon.png">
+    <title>Close Quarters Beyond</title>
+</head>
+<body>
+    <div class="header">
+        <button class="menuButton" onclick="toggleMenu()">
+            <img src="menuButton.png" />
+        </button>
+        <h1 class="title">Close Quarters Beyond</h1>
+    </div>
+
+    <div class="sidebar">
+        <h1>Pages</h1>
+        <button onclick="toPage('home')">Home</button>
+        <button onclick="toPage('weapons')">Weapons</button>
+        <button onclick="toPage('editor')">Character Editor</button>
+        <button onclick="toPage('nf')">Character Manager</button>
+    </div>
+
+    <div class="page home active">
+        <div class="content">
+            <h1>Home Page</h1>
+            <p>This is the home page.</p>
+            <img src="home.png" />
+        </div>
+    </div>
+
+    <div class="page weapons">
+        <div class="content">
+            <h1>Weapons</h1>
+            <div id="weaponList"></div>
+            <div id="weaponInfo"></div>
+        </div>
+    </div>
+
+    <div class="page editor">
+        <div class="content">
+            <h1>Character Editor</h1>
+            
+            <div id="charEditTable">
+                <div id="left">
+                    <p>Name</p>
+                    <input id="charName" placeholder="John Doe" />
+
+                    <p>Class</p>
+                    <select id="charClass">
+                        <option>Medic</option>
+                        <option>Engineer</option>
+                        <option>Soldier</option>
+                        <option>Heavy</option>
+                    </select>
+                    <img id="charClassImg" style="width: 100%;" />
+                </div>
+
+                <div id="mid">
+                    <p>Primary</p>
+                    <select id="charPrimary"></select>
+                    <img id="charPrimaryImg" style="width: 100%;"/>
+                </div>
+
+                <div id="right">
+                    <h2>Characters</h2>
+                    <div id="charList"></div>
+                </div>
+            </div>
+
+            <div id="charBottomRow">
+                <h2>DATA</h2>
+                <button onclick="newCharacter();">New Character</button>
+                <button onclick="saveCharacter();">Save As</button>
+                <button onclick="deleteCharacter();">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="page manager">
+        <div class="content">
+            <p>empty</p>
+        </div>
+    </div>
+
+    <div class="page nf">
+        <div class="content">
+            <h1>Page Not Found</h1>
+            <p>
+                404 Error
+            </p>
+            <img src="404.png" />
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
