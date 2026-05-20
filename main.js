@@ -14,16 +14,21 @@ const pageLoadFuncs =
 {
     editor: loadEditor,
     weapons: renderWeapons,
+    charViewer: updateCharLists
 };
 
 function toPage(name)
 {
     // iterate over every page                                              and make them inactive
-	document.querySelectorAll(".page").forEach(pageCur => pageCur.classList.remove("active"));
+	document.querySelectorAll(".panel").forEach(pageCur =>
+    pageCur.classList.remove("active"));
 
     // make the "name" page active
-    document.querySelector("." + name)
-        .classList.add("active");
+    console.log(name);
+
+    console.log(document.getElementById(name));
+
+    document.getElementById(name).classList.add("active");
 
     location.hash = name;
 
@@ -34,7 +39,7 @@ function toPage(name)
     }
 
     // check for 404 error
-    if (!document.querySelector("." + name))
+    if (!document.getElementById(name))
     {
         toPage("nf");
     }
@@ -165,7 +170,7 @@ async function loadEditor()
         weaponSelect.appendChild(option);
     });
 
-    editorLoadCharacters();
+    updateCharLists();
 }
 
 function newCharacter()
@@ -197,7 +202,6 @@ function deleteCharacter()
     }
 
     localSaveCharacters();
-    renderCharacters();
 }
 
 function saveCharacter()
@@ -219,26 +223,23 @@ function saveCharacter()
     }
 
     localSaveCharacters();
-    localLoadCharacters();
-    renderCharacters();
+    updateCharLists();
 }
 
 function localSaveCharacters()
 {
     localStorage.setItem("characters", JSON.stringify(characters));
-    editorLoadCharacters();
+    localLoadCharacters();
 }
 
 function localLoadCharacters()
 {
     characters = JSON.parse(localStorage.getItem("characters")) || [];
-    console.log(characters);
 }
 
 classSelect.onchange = updateClassImage;
 weaponSelect.onchange = updateWeaponImage;
 
-renderCharacters();
 updateEditor();
 
 function updateEditor()
@@ -263,40 +264,40 @@ function updateClassImage()
     img.src = `images/classes/${selected}.png`;
 }
 
-function editorLoadCharacters()
+function updateCharLists()
 {
     // get characters from localStorage
     localLoadCharacters();
 
-    // show characters
-    renderCharacters();
-
-    updateEditor();
+    // show characters for each list
+    renderCharLists();
 }
 
-function renderCharacters()
+function renderCharLists()
 {
-    let list = document.getElementById("charList");
+    let lists = document.querySelectorAll(".charList");
 
-    // clear children
-    while (list.firstChild)
-    {
-        list.removeChild(list.firstChild);
-    }
+    lists.forEach(list => {
+        // clear children
+        while (list.firstChild)
+        {
+            list.removeChild(list.firstChild);
+        }
 
-    // iterate over each weapon data
-    characters.forEach(char =>
-    {
-        // create a new button
-        const curButton = document.createElement("button");
-        // set the text to the char name
-        curButton.innerText = char.id;
+        // iterate over each weapon data
+        characters.forEach(char =>
+        {
+            // create a new button
+            const curButton = document.createElement("button");
+            // set the text to the char name
+            curButton.innerText = char.id;
         
-        // add an event to show the char
-        curButton.onclick = () => loadCharacter(char.id);
+            // add an event to show the char
+            curButton.onclick = () => loadCharacter(char.id);
         
-        // add the btn to the list
-        list.appendChild(curButton);
+            // add the btn to the list
+            list.appendChild(curButton);
+        });
     });
 }
 
